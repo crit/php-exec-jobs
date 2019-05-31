@@ -54,8 +54,7 @@ class Job
     private $env = null;
 
     /**
-     * Any errors collected during a run. Empty means that the entire transaction was successful. Any
-     * successful shell command will add null to the list of errors.
+     * The error value of each shell command during a run.
      *
      * @return array
      */
@@ -65,8 +64,7 @@ class Job
     }
 
     /**
-     * The return value of each shell command added to the job. If the shell command errored
-     * for any reason then the output at that array index will be null.
+     * The output value of each shell command during a run.
      *
      * @return array
      */
@@ -76,7 +74,7 @@ class Job
     }
 
     /**
-     * Add a shell command to the current job steps. If the command errors, do not continue to the next
+     * Add a shell command to the current job. If the command errors, do not continue to the next
      * step in the list of shell commands.
      *
      * @param string $command
@@ -87,7 +85,7 @@ class Job
     }
 
     /**
-     * Add a shell command to the current job steps. If the command errors, continue to the next step
+     * Add a shell command to the current job. If the command errors, continue to the next step
      * in the list of shell commands.
      *
      * @param string $command
@@ -98,7 +96,7 @@ class Job
     }
 
     /**
-     * Add a named argument to the current job's context. Any shell command that contains the named argument
+     * Add a named argument to the current job. Any shell command that contains the named argument
      * wrapped correctly will be replaced with the shell escaped value at run time.
      *
      * @param string $name
@@ -146,7 +144,7 @@ class Job
     }
 
     /**
-     * Find/replace all named arguments in shell commands and run each shell command in order added.
+     * Find/replace all named arguments in shell commands and run each shell command in the order added.
      *
      * @return bool A run with no errors on 'must' directives will return true otherwise false.
      */
