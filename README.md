@@ -2,6 +2,10 @@
 
 Execute shell scripts in order with named arguments and error checking.
 
+## Installation
+
+`composer require crit/php-exec-jobs`
+
 ## Reason
 
 You can accomplish something similar to this library by doing the following code if you just have a simple use case
@@ -33,7 +37,7 @@ $job = new Job();
 // defaulted to '<', '>'
 // $job->setArgWrapper(':', ':');
 
-$job->arg('firstanme', $_GET['firstname']); // John
+$job->arg('firstname', $_GET['firstname']); // John
 $job->arg('lastname', $_GET['lastname']); // Doe
 $job->arg('interface', $_GET['interface']); // eth0
 
@@ -54,6 +58,6 @@ echo $ok ? "Run successful" : "Run failed";
 
 ```
 > Output: ["John Doe", null, "192.168.10.16", "Hello, John Doe!"]
-> Error: [null, "sh: command not found: ip", null, null]
+> Errors: [null, "sh: command not found: ip", null, null]
 > Run successful
 ```
