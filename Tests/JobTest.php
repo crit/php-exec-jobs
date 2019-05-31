@@ -68,4 +68,27 @@ class JobTest extends TestCase
         $this->assertTrue($ok, json_encode($job->errors()));
         $this->assertEquals(['John', 'Doe'], $job->output());
     }
+
+    function testJobSetWorkingDir()
+    {
+        $job = new Job();
+        $job->setWorkingDirectory(dirname(__FILE__));
+        $job->must('echo Hello');
+
+        $ok = $job->run();
+
+        $this->assertTrue($ok, json_encode($job->errors()));
+    }
+
+    function testJobSetEnv()
+    {
+        $job = new Job();
+        $job->setEnv("EXECJOBTESTVALUE", "Testing1");
+        $job->must('echo $EXECJOBTESTVALUE');
+
+        $ok = $job->run();
+
+        $this->assertTrue($ok, json_encode($job->errors()));
+        $this->assertEquals(['Testing1'], $job->output());
+    }
 }

@@ -40,6 +40,20 @@ class Job
     private $wrapper = ["<", ">"];
 
     /**
+     * Working directory for shell commands. Null uses the current working directory for the PHP process.
+     *
+     * @var null|string
+     */
+    private $workingDir = null;
+
+    /**
+     * Env values for this job.
+     *
+     * @var null|array
+     */
+    private $env = null;
+
+    /**
      * Any errors collected during a run. Empty means that the entire transaction was successful. Any
      * successful shell command will add null to the list of errors.
      *
@@ -96,6 +110,7 @@ class Job
     }
 
     /**
+     * Change the named argument wrappers from their default values for this job.
      *
      * @param string $start
      * @param string $end
@@ -104,6 +119,30 @@ class Job
     {
         $this->wrapper[0] = $start;
         $this->wrapper[1] = $end;
+    }
+
+    /**
+     * Set the shell working directory for this job. Default's to the current working directory
+     * for the PHP process.
+     *
+     * @param string $path
+     */
+    public function setWorkingDirectory(string $path)
+    {
+        if (is_dir($path)) $this->workingDir = $path;
+    }
+
+    /**
+     * Set an ENV variable for this job.
+     *
+     * @param string $key
+     * @param string $value
+     */
+    public function setEnv(string $key, string $value)
+    {
+        if (is_null($this->env)) $this->env = [];
+
+        $this->env[$key] = $value;
     }
 
     /**
@@ -158,13 +197,12 @@ class Job
         );
 
         $pipes = [];
-        $process = proc_open($command, $spec, $pipes, dirname(__FILE__), null);
+        $process = proc_open($command, $spec, $pipes, $this->workingDir, $this->env);
         $output = stream_get_contents($pipes[1]);
         fclose($pipes[1]);
         $stderr = stream_get_contents($pipes[2]);
         fclose($pipes[2]);
         proc_close($process);
-
 
         if ($output) $result['output'] = trim($output);
         if ($stderr) $result['error'] = trim($stderr);

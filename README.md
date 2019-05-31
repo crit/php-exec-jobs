@@ -37,6 +37,14 @@ $job = new Job();
 // defaulted to '<', '>'
 // $job->setArgWrapper(':', ':');
 
+// optionally change the shell working directory
+// defaulted to the current working directory of the PHP process
+// $job->setWorkingDirectory('/sbin');
+
+// optionally set ENV variables for this job
+// $job->setEnv('CUSTOM1', 'special-value-1');
+// $job->setEnv('CUSTOM2', 'special-value-2');
+
 $job->arg('firstname', $_GET['firstname']); // John
 $job->arg('lastname', $_GET['lastname']); // Doe
 $job->arg('interface', $_GET['interface']); // eth0
