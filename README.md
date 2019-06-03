@@ -8,8 +8,7 @@ Execute shell scripts in order with named arguments and error checking.
 
 ## Reason
 
-You can accomplish something similar to this library by doing the following code if you just have a simple use case
-to call to the host shell:
+You can accomplish something similar to this library by executing the following code for simple use cases:
 
 ```php
 <?php
@@ -20,8 +19,10 @@ $ip = exec("ip addr show dev $interface |grep inet |awk '{print $2}'");
 echo $ip;
 ```
 
-But what if you want to handle errors (like if `ip` does not exist on the host)? What if you want to do many operations
-in a single request? This library aims to help with that process. It represents the research needed to capture
+- What if you want to handle errors (like if `ip` does not exist on the host)? 
+- What if you want to do many operations in a single request? 
+
+This library aims to help with that process. It represents the research needed to capture
 errors/output using `proc_open()` and giving you the ability to safely parametrize arguments to the shell if needed.
 
 ## Usage
